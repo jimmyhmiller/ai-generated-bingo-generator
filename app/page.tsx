@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Label } from "@/components/ui/label"
 import { Share2, Plus, Trash2, RefreshCw } from "lucide-react"
 import BingoCard from "@/components/bingo-card"
+import { start } from "repl"
 
 export default function BingoGenerator() {
   const router = useRouter()
@@ -17,6 +18,7 @@ export default function BingoGenerator() {
   const [currentEntry, setCurrentEntry] = useState("")
   const [isGenerating, setIsGenerating] = useState(false)
   const [shareUrl, setShareUrl] = useState("")
+  const [startedWithNothing, setStartedWithNothing] = useState(true)
 
   // Load entries from URL if available - only once on initial load
   useEffect(() => {
@@ -27,6 +29,7 @@ export default function BingoGenerator() {
         if (Array.isArray(decodedEntries) && decodedEntries.length > 0) {
           setEntries(decodedEntries)
           setIsGenerating(true)
+          setStartedWithNothing(false)
         }
       } catch (error) {
         console.error("Failed to parse entries from URL", error)
@@ -58,6 +61,8 @@ export default function BingoGenerator() {
     // Generate shareable URL
     const encodedEntries = btoa(JSON.stringify(entries))
     const url = `${window.location.origin}?entries=${encodedEntries}`
+    // navigate to the generated URL
+    router.push(url)
     setShareUrl(url)
   }
 
@@ -133,7 +138,7 @@ export default function BingoGenerator() {
         <div className="space-y-6">
           <BingoCard entries={entries} />
 
-          <div className="space-y-3">
+          {startedWithNothing ? <div className="space-y-3">
             <Button className="w-full flex items-center justify-center" onClick={copyShareUrl} variant="outline">
               <Share2 className="mr-2 h-4 w-4" />
               Copy Shareable Link
@@ -143,7 +148,8 @@ export default function BingoGenerator() {
               <RefreshCw className="mr-2 h-4 w-4" />
               Create New Card
             </Button>
-          </div>
+          </div> : <div />}
+          
         </div>
       )}
     </div>
