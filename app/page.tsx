@@ -85,8 +85,6 @@ export default function BingoGenerator() {
 
   return (
     <div className="container max-w-md mx-auto py-6 px-4">
-      <h1 className="text-2xl font-bold text-center mb-6">Bingo Card Generator</h1>
-
       {!isGenerating ? (
         <Card>
           <CardHeader>

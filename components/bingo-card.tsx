@@ -82,7 +82,7 @@ export default function BingoCard({ entries }: BingoCardProps) {
               onClick={() => toggleMark(index)}
               className={cn(
                 "aspect-square border rounded-md p-1 flex items-center justify-center text-center text-xs sm:text-sm cursor-pointer transition-colors",
-                markedSquares[index] ? "bg-primary text-primary-foreground" : "hover:bg-muted",
+                markedSquares[index] ? "bg-violet-400 text-primary-foreground" : "hover:bg-muted",
               )}
             >
               {entry}
